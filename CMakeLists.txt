@@ -3,4 +3,4 @@ project(string-encoder)
 
 set(CMAKE_CXX_STANDARD 17)
 
-add_executable(string-encoder main.cpp app.cpp app.h)
+add_executable(string-encoder main.cpp app.cpp app.h codecs/html.cpp codecs/html.h)
