@@ -32,6 +32,10 @@ void App::run() const {
             processed = url_encode(arg);
         } else if (actionType == "urldecode") {
             processed = url_decode(arg);
+        } else if (actionType == "htmlencode") {
+            processed = htmlCodec.encode(arg);
+        } else if (actionType == "htmldecode") {
+            processed = htmlCodec.decode(arg);
         } else {
             std::cout << "Invalid action type: " << actionType
                       << "\n\nValid types are:\n  - urlencode\n  - urldecode" <<  std::endl;

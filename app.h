@@ -6,6 +6,7 @@
 #include <cctype>
 #include <iomanip>
 #include <vector>
+#include "codecs/html.h"
 
 class App {
 public:
@@ -22,6 +23,7 @@ private:
     int numberOfArguments;
     int startIndex;
     std::vector<std::string> arguments;
+    HTMLCodec htmlCodec;
 };
 
 
