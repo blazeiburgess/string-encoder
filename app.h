@@ -7,6 +7,7 @@
 #include <iomanip>
 #include <vector>
 #include "codecs/html.h"
+#include <stdlib.h>
 
 class App {
 public:

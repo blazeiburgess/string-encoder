@@ -20,6 +20,12 @@ App::App(int argc, char **argv) {
         actionType = "urlencode";
         startIndex = 1;
     }
+
+    if (actionType != "urlencode" && actionType != "urldecode" && actionType != "htmlencode" && actionType != "htmldecode") {
+        std::cout << "Invalid action type: " << actionType
+                  << "\n\nValid types are:\n  - urlencode\n  - urldecode" <<  std::endl;
+        invalidArgumentCount = true;
+    }
 }
 
 void App::run() const {
@@ -45,6 +51,11 @@ void App::run() const {
     }
 }
 
+/**
+ * @brief Encodes a string to be URL safe
+ * @param value The string to encode
+ * @return The encoded string
+ */
 std::string App::url_encode(const std::string &value) {
     std::ostringstream escaped;
     escaped.fill('0');
@@ -68,11 +79,14 @@ std::string App::url_encode(const std::string &value) {
     return escaped.str();
 }
 
+/**
+ * @brief Decodes a URL encoded string
+ * @param str The URL encoded string
+ * @return The decoded string
+ */
 std::string App::url_decode(std::string str) {
     std::string ret;
-    char ch;
-    int i, j;
-    for (i = 0; i < str.length(); i++)
+    for (size_t i = 0; i < str.length(); i++)
     {
         if (str[i] != '%')
         {
@@ -80,10 +94,13 @@ std::string App::url_decode(std::string str) {
         }
         else
         {
-            sscanf(str.substr(i+1,2).c_str(), "%x", &j);
-            ch = static_cast<char>(j);
-            ret += ch;
-            i = i + 2;
+            char* end;
+            int j = std::strtoul(str.substr(i+1,2).c_str(), &end, 16); // using strtoul here
+            if (*end) {
+                throw std::runtime_error("Conversion error in url_decode");
+            }
+            ret += static_cast<char>(j);
+            i += 2;
         }
     }
     return ret;
